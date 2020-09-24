@@ -56,6 +56,7 @@ def kmp(text, pattern):
             end_pub_str = temp_pattern[-pub_str_len:]
             if front_pub_str == end_pub_str:
                 longest_len = pub_str_len
+                break
         longest_pub_str_list[patt_len - 1] = longest_len
     cur_idx = 0
     match_char_num = 0
