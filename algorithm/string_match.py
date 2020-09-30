@@ -76,10 +76,70 @@ def kmp(text, pattern):
     return -1
 
 
+def bm(text, pattern):
+    """BM algorithm
+
+    Args:
+        text (str):
+        pattern (str):
+
+    Returns: (int) if not match: -1
+
+    """
+    # get char idx from right in pattern
+    pat_char_right_idx_dict = {}
+    for idx, char in enumerate(pattern):
+        pat_char_right_idx_dict[char] = len(pattern) - idx
+
+    # get longest public str from front and end
+    good_str_idx_dict = {}
+    for st in range(0, len(pattern)):
+        for end in range(st + 1, len(pattern) + 1):
+            good_str = pattern[st:end]
+            if good_str not in good_str_idx_dict:
+                good_str_idx_dict[good_str] = st
+
+    cur_idx, match_char_idx = len(pattern) - 1, len(pattern) - 1
+    match_char_num, move_idx = 0, 0
+    while 0 <= cur_idx < len(text):
+
+        if text[cur_idx] == pattern[match_char_idx]:
+            match_char_num += 1
+            match_char_idx -= 1
+            if match_char_num == len(pattern):
+                return cur_idx
+        else:
+            # bad char
+            if text[cur_idx] in pat_char_right_idx_dict:
+                bad_move_idx = pat_char_right_idx_dict[text[cur_idx]] - (
+                    len(pattern) - match_char_idx)
+            else:
+                bad_move_idx = len(pattern)
+            match_char_idx = len(pattern) - 1
+            if text[cur_idx] in pattern:
+                if match_char_num:
+                    max_len_str = pattern[-match_char_num:]
+                    for i in range(len(max_len_str)):
+                        i += 1
+                        pat_idx = len(pattern) - i
+                        k = max_len_str[-i:]
+                        gd_idx = good_str_idx_dict.get(k, -1)
+
+                        move_idx = pat_idx - gd_idx
+            move_idx = max(move_idx, bad_move_idx)
+            cur_idx += move_idx
+            match_char_num = 0
+            move_idx = 0
+            continue
+
+        cur_idx -= 1
+    return -1
+
+
 if __name__ == '__main__':
-    t = 'BBC ABCDAB ABCDABCDABDE'
-    p = 'ABCDABD'
+    t = 'to young too simple'
+    p = 'too'
     # res = sunday(t, p)
-    res = kmp(t, p)
+    res = bm(t, p)
     print(res)
     pass
