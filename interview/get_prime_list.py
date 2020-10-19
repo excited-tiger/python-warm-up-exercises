@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-get a list of prime numbers less than n
+get a list of prime numbers less than i
 """
 
 
@@ -13,7 +13,7 @@ def get_prime_list_v1(n):
 
     def add_prime_num(n, prime_list):
         # 进1取整
-        # m = int(round(math.sqrt(n), 0))
+        # m = int(round(math.sqrt(i), 0))
         if n < 3:
             return prime_list
         flag = True
