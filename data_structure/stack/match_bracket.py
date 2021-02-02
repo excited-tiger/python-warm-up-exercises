@@ -2,8 +2,8 @@
 # @atime    : 2021/2/2 9:09 下午
 """
 brackets balance
+https://www.luogu.com.cn/problem/UVA673
 """
-from scripts import local_file_test
 
 
 def check_balance(brackets_str):
@@ -22,7 +22,7 @@ def check_balance(brackets_str):
     return True
 
 
-@local_file_test
+# @local_file_test
 def solution():
     pair_num = int(input())
     for i in range(pair_num):
